@@ -100,9 +100,9 @@ void Parser::Stmts()
         case '{':
             Block();
             break;
-        // stmt -> fact;
+        // stmt -> Expr;
         case Tag::ID:
-            Fact();
+            Expr();
             if (!Match(';'))
             {
                 stringstream ss;
