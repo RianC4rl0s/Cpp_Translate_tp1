@@ -27,8 +27,8 @@ void Parser::Block()
     // block -> { decls stmts }
     if (!Match('{'))
         throw SyntaxError(scanner.Lineno(), "\'{\' esperado");
-    else
-        cout << "{ ";
+    //else
+    //    cout << "{ ";
 
     // nova tabela de símbolos para o bloco
     // ------------------------------------
@@ -41,8 +41,8 @@ void Parser::Block()
 
     if (!Match('}'))
         throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
-    else
-        cout << "} ";
+    //else
+    //    cout << "} ";
 
     // tabela do escopo envolvente volta a ser a tabela ativa
     // ------------------------------------------------------
@@ -109,6 +109,7 @@ void Parser::Stmts()
                 ss << "encontrado \'" << lookahead->toString() << "\' no lugar de ';'";
                 throw SyntaxError{scanner.Lineno(), ss.str()};
             }
+            cout << '\n';
             break;
         // stmts -> empty
         default:
@@ -116,7 +117,8 @@ void Parser::Stmts()
         }
     }
 }
-void Parser::Expr(){
+void Parser::Expr()
+{
     // expr -> term add
     Term();
     while (true)
@@ -136,10 +138,12 @@ void Parser::Expr(){
             cout << '-';
         }
         // add -> empty
-        else return; 
+        else
+            return;
     }
 }
-void Parser::Term(){
+void Parser::Term()
+{
     // term -> fact mult
     Fact();
     while (true)
@@ -150,7 +154,7 @@ void Parser::Term(){
             Match('*');
             Fact();
             cout << '*';
-        } 
+        }
         // mult -> / fact { print(/) } mult
         else if (lookahead->tag == '/')
         {
@@ -159,13 +163,77 @@ void Parser::Term(){
             cout << '/';
         }
         // mult -> empty
-        else return;
+        else
+            return;
     }
 }
 void Parser::Fact()
 {
+    /*switch (lookahead->tag)
+    {
+        case '(':
+            if (Match('('))
+            {
+            }
+            else
+            {
+                throw SyntaxError(scanner.Lineno(), "\'(\' esperado");
+            }
+            Expr();
+            if (Match(')'))
+            {
+            }
+            else
+            {
+                throw SyntaxError(scanner.Lineno(), "\')\' esperado");
+            }
+            break;
+        case Tag::ID:
+            // verifica tipo da variável na tabela de símbolos
+            Symbol *s = symtable->Find(lookahead->toString());
+            if (!s)
+            {
+                stringstream ss;
+                ss << "variável \"" << lookahead->toString() << "\" não declarada";
+                throw SyntaxError{scanner.Lineno(), ss.str()};
+            }
+            else
+            {
+                // cout << s->var << ':' << s->type << "; ";
+                cout << "(" << s->var << ':' << s->type << ") ";
+                Match(Tag::ID);
+            }
+            break;
+        case Tag::NUM:
+            cout << "(" << lookahead->toString() << ")";
+            Match(Tag::NUM);
+            break;
+        default:
+            stringstream ss;
+            ss << '\'' << lookahead->toString() << "\' inválido na expressão";
+            throw SyntaxError{scanner.Lineno(), ss.str()};
+            break;
+    }*/
+    if (Match('('))
+    {
+        if (Match('('))
+        {
+        }
+        else
+        {
+            throw SyntaxError(scanner.Lineno(), "\'(\' esperado");
+        }
+        Expr();
+        if (Match(')'))
+        {
+        }
+        else
+        {
+            throw SyntaxError(scanner.Lineno(), "\')\' esperado");
+        }
+    }
     // fact -> id
-    if (lookahead->tag == Tag::ID)
+    else if (lookahead->tag == Tag::ID)
     {
         // verifica tipo da variável na tabela de símbolos
         Symbol *s = symtable->Find(lookahead->toString());
@@ -175,8 +243,13 @@ void Parser::Fact()
             ss << "variável \"" << lookahead->toString() << "\" não declarada";
             throw SyntaxError{scanner.Lineno(), ss.str()};
         }
-        cout << s->var << ':' << s->type << "; ";
+        cout<<"( " << s->var << ':' << s->type << " )";
         Match(Tag::ID);
+    }
+    else if (lookahead->tag == Tag::NUM)
+    {
+        cout << "( " << lookahead->toString() << " )";
+        Match(Tag::NUM);
     }
     else
     {

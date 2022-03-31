@@ -1,12 +1,17 @@
+// teste
 math{
     int value;
     char y;
     value + y;
+    value / y;
+    //2 + 3;
+    //2+(3-5);
+    //(value - y) * y;
     {
-        bool y;
+        bool y;//teste2
         value;
         y;     
     }
-    value;
+    value;/*teste3*/
     y;
 }

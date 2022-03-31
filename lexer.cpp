@@ -34,21 +34,71 @@ Token * Lexer::Scan()
 			line += 1;
 		peek = fin.get();
 	}
-	/*while(peek == '/'){
-		if (fin.peek()== '/')
-		{
+	//ignora comentarios
+	while (peek == '/') {
+		stringstream ss;
+		ss << peek;
+
+		peek = fin.get();
+		
+		if (peek == '/'){
+
+			do {
+				peek = fin.get();
+			} while (peek != '\n');
+			line ++;
 			peek = fin.get();
-			while (peek != '\n')
-			{
+
+			if (peek == '\n')
+				line += 1;
+			
+			while (isspace(peek)) {
+				if (peek == '\n')
+					line += 1;
 				peek = fin.get();
 			}
-			line ++;
-			
-		}else if(fin.peek() == '*'){
 
+
+		} else if (peek == '*') {
+			int exit = 0;
+			do {
+				peek = fin.get();
+				if (peek == '*'){
+					do {
+						peek = fin.get();
+						if (peek == '/') {
+							exit = 1;
+						}
+					} while (peek == '*' && exit == 0);
+				} 
+				//considera o salto de linha do comentario
+				if (peek == '\n') {
+					line ++;
+				}
+			} while (exit != 1 && peek != EOF);
+
+			peek = fin.get();
+
+			if (peek == '\n')
+				line += 1;
+			
+			while (isspace(peek)) {
+				if (peek == '\n')
+					line += 1;
+				peek = fin.get();
+			}
+			
+		} else {
+			// operadores (e caracteres não alphanuméricos isolados)
+			
+			Token op {ss.str()[0]};
+
+            // retorna o token 
+            token.t = op;
+            return &token.t;
+            
 		}
-		
-	}*/
+	} 
 	// retorna números
 	if (isdigit(peek))
 	{

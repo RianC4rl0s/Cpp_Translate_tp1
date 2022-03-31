@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
-		cout << argv[1] << "\n";
+		//cout << argv[1] << "\n";
 		if (!strcmp(argv[1], "--help"))
 		{
 			cout << "Use tradutor <file_pat/filename>  Para Realizara a tradução\n";
