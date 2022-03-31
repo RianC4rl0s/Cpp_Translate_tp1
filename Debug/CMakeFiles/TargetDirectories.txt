@@ -1,0 +1,3 @@
+/home/rian/Compiladores/Lab08/Debug/CMakeFiles/rebuild_cache.dir
+/home/rian/Compiladores/Lab08/Debug/CMakeFiles/edit_cache.dir
+/home/rian/Compiladores/Lab08/Debug/CMakeFiles/tradutor.dir
