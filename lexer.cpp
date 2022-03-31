@@ -34,7 +34,7 @@ Token * Lexer::Scan()
 			line += 1;
 		peek = fin.get();
 	}
-	while(peek == '/'){
+	/*while(peek == '/'){
 		if (fin.peek()== '/')
 		{
 			peek = fin.get();
@@ -48,7 +48,7 @@ Token * Lexer::Scan()
 
 		}
 		
-	}
+	}*/
 	// retorna números
 	if (isdigit(peek))
 	{

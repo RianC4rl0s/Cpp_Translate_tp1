@@ -1,13 +1,12 @@
 math{
-    int x;
+    int value;
     char y;
-    x + y;
+    value + y;
     {
         bool y;
-        x;
-        y;   
-        x/3;   
+        value;
+        y;     
     }
-    x;
+    value;
     y;
 }

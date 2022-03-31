@@ -116,100 +116,50 @@ void Parser::Stmts()
         }
     }
 }
-void Parser::Expr()
-{
-    /*
-        expr->expr + term
-            |expr - term
-            |term
-        vira:
-
-        exp-> term oper
-    */
+void Parser::Expr(){
+    // expr -> term add
     Term();
-    Oper();
-}
-void Parser::Oper()
-{
-    /*
-    oper -> + term oper
-        | - term oper
-        | E
-
-    */
-    switch (lookahead->tag)
+    while (true)
     {
-    case '+':
-        Term();
-        Oper();
-        break;
-    case '-':
-        Term();
-        Oper();
-        break;
+        // add -> + term { print(+) } add
+        if (lookahead->tag == '+')
+        {
+            Match('+');
+            Term();
+            cout << '+';
+        }
+        // add -> - term { print(-) } add
+        else if (lookahead->tag == '-')
+        {
+            Match('-');
+            Term();
+            cout << '-';
+        }
+        // add -> empty
+        else return; 
     }
 }
-void Parser::Term()
-{
-    /*
-        term → term * factor
-            | term / factor
-            | factor
-
-        vira:
-        term-> factor operM
-    */
-    Factor();
-    OperM();
-}
-void Parser::Factor()
-{
-    switch (lookahead->tag)
+void Parser::Term(){
+    // term -> fact mult
+    Fact();
+    while (true)
     {
-    case '(':
-        if (Match('('))
+        // mult -> * fact { print(*) } mult
+        if (lookahead->tag == '*')
         {
-        }
-        else
+            Match('*');
+            Fact();
+            cout << '*';
+        } 
+        // mult -> / fact { print(/) } mult
+        else if (lookahead->tag == '/')
         {
+            Match('/');
+            Fact();
+            cout << '/';
         }
-        Expr();
-        if (Match(')'))
-        {
-        }
-        else
-        {
-        }
-        break;
-    case Tag::NUM:
-        break;
-    case Tag::ID:
-        break;
-    default:
-        stringstream ss;
-        ss << "Expressao errada";
-        throw SyntaxError{scanner.Lineno(), ss.str()};
-        break;
-    }
-}
-void Parser::OperM()
-{
-    /*
-        operM -> * factor oper
-        | / factor oper
-        | E
-
-    */
-    switch (lookahead->tag)
-    {
-    case '*':
-        Factor();
-        OperM();
-        break;
-    case '/':
-        Factor();
-        Oper();
-        break;
+        // mult -> empty
+        else return;
     }
 }
 void Parser::Fact()
