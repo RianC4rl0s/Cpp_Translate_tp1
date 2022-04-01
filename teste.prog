@@ -1,17 +1,16 @@
-// teste
-math{
-    int value;
-    char y;
-    value + y;
-    value / y;
-    //2 + 3;
-    //2+(3-5);
-    //(value - y) * y;
-    {
-        bool y;//teste2
-        value;
-        y;     
-    }
-    value;/*teste3*/
-    y;
+// arquivo fonte
+math
+{
+ int x;
+ int val;
+ x + val;
+ //2+(3-5);
+ {
+ //float x; /* outro x */
+ //2 – 3.5 + x;
+ bool y;
+ y;
+ }
+ x;
 }
+

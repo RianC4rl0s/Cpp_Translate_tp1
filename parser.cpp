@@ -169,72 +169,25 @@ void Parser::Term()
 }
 void Parser::Fact()
 {
-    /*switch (lookahead->tag)
+    // fact -> (expr)
+    if (lookahead->tag == '(')
     {
-        case '(':
-            if (Match('('))
-            {
-            }
-            else
-            {
-                throw SyntaxError(scanner.Lineno(), "\'(\' esperado");
-            }
-            Expr();
-            if (Match(')'))
-            {
-            }
-            else
-            {
-                throw SyntaxError(scanner.Lineno(), "\')\' esperado");
-            }
-            break;
-        case Tag::ID:
-            // verifica tipo da variável na tabela de símbolos
-            Symbol *s = symtable->Find(lookahead->toString());
-            if (!s)
-            {
-                stringstream ss;
-                ss << "variável \"" << lookahead->toString() << "\" não declarada";
-                throw SyntaxError{scanner.Lineno(), ss.str()};
-            }
-            else
-            {
-                // cout << s->var << ':' << s->type << "; ";
-                cout << "(" << s->var << ':' << s->type << ") ";
-                Match(Tag::ID);
-            }
-            break;
-        case Tag::NUM:
-            cout << "(" << lookahead->toString() << ")";
-            Match(Tag::NUM);
-            break;
-        default:
-            stringstream ss;
-            ss << '\'' << lookahead->toString() << "\' inválido na expressão";
-            throw SyntaxError{scanner.Lineno(), ss.str()};
-            break;
-    }*/
-    if (Match('('))
-    {
-        if (Match('('))
-        {
-        }
-        else
-        {
-            throw SyntaxError(scanner.Lineno(), "\'(\' esperado");
-        }
+        Match('(');
         Expr();
-        if (Match(')'))
-        {
-        }
-        else
-        {
-            throw SyntaxError(scanner.Lineno(), "\')\' esperado");
-        }
+        if(!Match(')'))
+            throw SyntaxError{ scanner.Lineno(), "\')\' esperado" };
     }
-    // fact -> id
-    else if (lookahead->tag == Tag::ID)
+    // fact -> num { print(num.valor) }
+    else if (lookahead->tag == Tag::NUM)
     {
+        cout << "( " << lookahead->toString() << " )";
+        Match(Tag::NUM);
+    }
+    // fact -> id { print(id.nome) }
+    else if (lookahead->tag == Tag::ID)
+    {      
+        //cout << '[' << lookahead->toString() << ']';
+        //Match(Tag::ID);
         // verifica tipo da variável na tabela de símbolos
         Symbol *s = symtable->Find(lookahead->toString());
         if (!s)
@@ -246,16 +199,12 @@ void Parser::Fact()
         cout<<"( " << s->var << ':' << s->type << " )";
         Match(Tag::ID);
     }
-    else if (lookahead->tag == Tag::NUM)
-    {
-        cout << "( " << lookahead->toString() << " )";
-        Match(Tag::NUM);
-    }
+    // erro de sintaxe
     else
     {
         stringstream ss;
-        ss << '\'' << lookahead->toString() << "\' inválido na expressão";
-        throw SyntaxError{scanner.Lineno(), ss.str()};
+        ss << "símbolo \'" << lookahead->toString() << "\' inválido";  
+        throw SyntaxError{ scanner.Lineno(), ss.str() };
     }
 }
 
