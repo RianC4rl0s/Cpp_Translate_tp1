@@ -40,7 +40,7 @@ void Parser::Block()
     Stmts();
 
     if (!Match('}'))
-        throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
+      throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
     //else
     //    cout << "} ";
 
@@ -111,7 +111,17 @@ void Parser::Stmts()
             }
             cout << '\n';
             break;
-        // stmts -> empty
+        case Tag::NUM:
+            Expr();
+            if (!Match(';'))
+            {
+                stringstream ss;
+                ss << "encontrado \'" << lookahead->toString() << "\' no lugar de ';'";
+                throw SyntaxError{scanner.Lineno(), ss.str()};
+            }
+            cout << '\n';    
+        break;
+        //stmts -> empty
         default:
             return;
         }
@@ -142,6 +152,7 @@ void Parser::Expr()
             return;
     }
 }
+
 void Parser::Term()
 {
     // term -> fact mult
@@ -167,6 +178,7 @@ void Parser::Term()
             return;
     }
 }
+
 void Parser::Fact()
 {
     // fact -> (expr)
@@ -177,13 +189,6 @@ void Parser::Fact()
         if(!Match(')'))
             throw SyntaxError{ scanner.Lineno(), "\')\' esperado" };
     }
-    // fact -> num { print(num.valor) }
-    else if (lookahead->tag == Tag::NUM)
-    {
-        cout << "( " << lookahead->toString() << " )";
-        Match(Tag::NUM);
-    }
-    // fact -> id { print(id.nome) }
     else if (lookahead->tag == Tag::ID)
     {      
         //cout << '[' << lookahead->toString() << ']';
@@ -198,6 +203,11 @@ void Parser::Fact()
         }
         cout<<"( " << s->var << ':' << s->type << " )";
         Match(Tag::ID);
+    }
+    else if (lookahead->tag == Tag::NUM)
+    {
+        cout << "( " << lookahead->toString() << " )";
+        Match(Tag::NUM);
     }
     // erro de sintaxe
     else

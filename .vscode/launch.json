@@ -10,11 +10,11 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Debug/tradutor",
-            "args": [],
-            "stopAtEntry": false,
+            "args": ["teste.prog"],
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
