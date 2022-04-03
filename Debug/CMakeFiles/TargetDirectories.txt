@@ -1,0 +1,3 @@
+/home/rian/Compiladores/TP1_compiladores/Debug/CMakeFiles/rebuild_cache.dir
+/home/rian/Compiladores/TP1_compiladores/Debug/CMakeFiles/edit_cache.dir
+/home/rian/Compiladores/TP1_compiladores/Debug/CMakeFiles/tradutor.dir

@@ -1,19 +1,23 @@
 // arquivo fonte
+//2
+//4
+
 math
 {
  int x;
  int val;
  int y;
  x + val;
- //2+(3-5);
+ 2+(3/5);
  //(2*4)-4;
  {
- //float x; /* outro x */
+ int x;/*teste*/
  //2 - 3+4;
  bool y;
  y;
  }
  x;
  y;
+ 2;
 }
 

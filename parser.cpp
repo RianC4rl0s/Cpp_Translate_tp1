@@ -27,9 +27,7 @@ void Parser::Block()
     // block -> { decls stmts }
     if (!Match('{'))
         throw SyntaxError(scanner.Lineno(), "\'{\' esperado");
-    //else
-    //    cout << "{ ";
-
+   
     // nova tabela de símbolos para o bloco
     // ------------------------------------
     SymTable *saved = symtable;
@@ -41,8 +39,6 @@ void Parser::Block()
 
     if (!Match('}'))
       throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
-    //else
-    //    cout << "} ";
 
     // tabela do escopo envolvente volta a ser a tabela ativa
     // ------------------------------------------------------
@@ -90,7 +86,7 @@ void Parser::Stmts()
     // stmts -> stmt stmts
     //        | empty
     // stmt  -> block
-    //        | fact;
+    //        | Factor;
 
     while (true)
     {
@@ -155,22 +151,22 @@ void Parser::Expr()
 
 void Parser::Term()
 {
-    // term -> fact mult
-    Fact();
+    // term -> Factor mult
+    Factor();
     while (true)
     {
-        // mult -> * fact { print(*) } mult
+        // mult -> * Factor { print(*) } mult
         if (lookahead->tag == '*')
         {
             Match('*');
-            Fact();
+            Factor();
             cout << '*';
         }
-        // mult -> / fact { print(/) } mult
+        // mult -> / Factor { print(/) } mult
         else if (lookahead->tag == '/')
         {
             Match('/');
-            Fact();
+            Factor();
             cout << '/';
         }
         // mult -> empty
@@ -179,9 +175,9 @@ void Parser::Term()
     }
 }
 
-void Parser::Fact()
+void Parser::Factor()
 {
-    // fact -> (expr)
+    // Factor -> (expr)
     if (lookahead->tag == '(')
     {
         Match('(');

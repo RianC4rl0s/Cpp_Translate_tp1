@@ -27,19 +27,20 @@ int Lexer::Lineno()
 // retorna tokens para o analisador sintático
 Token *Lexer::Scan()
 {
-	// ignora espaços em branco, tabulações e novas linhas
-	while (isspace(peek))
-	{
-		if (peek == '\n')
-			line += 1;
-		peek = fin.get();
-	}
+	// come espaços
+
+	// Trasnformei isso em funcao
+	//  while (isspace(peek))
+	//  {
+	//  	if (peek == '\n')
+	//  		line += 1;
+	//  	peek = fin.get();
+	//  }
+	spaceEater();
 	// ignora comentarios
 	while (peek == '/')
 	{
-		stringstream ss;
-		ss << peek;
-
+		char temp = peek;
 		peek = fin.get();
 
 		if (peek == '/')
@@ -50,23 +51,11 @@ Token *Lexer::Scan()
 			{
 				peek = fin.get();
 			}
-
-			line++;
-			peek = fin.get();
-
-			if (peek == '\n')
-				line += 1;
-
-			while (isspace(peek))
-			{
-				if (peek == '\n')
-					line += 1;
-				peek = fin.get();
-			}
+			spaceEater();
 		}
 		else if (peek == '*')
 		{
-			int comment = 0;
+			bool isComment = false;
 			do
 			{
 				peek = fin.get();
@@ -75,14 +64,15 @@ Token *Lexer::Scan()
 					peek = fin.get();
 					if (peek == '/')
 					{
-						comment = 1;
+						isComment = true;
 					}
-					while (peek == '*' && comment == 0)
+
+					while (peek == '*' && isComment == false)
 					{
 						peek = fin.get();
 						if (peek == '/')
 						{
-							comment = 1;
+							isComment = true;
 						}
 					}
 				}
@@ -91,30 +81,23 @@ Token *Lexer::Scan()
 				{
 					line++;
 				}
-			} while (comment != 1 && peek != EOF);
+			} while (isComment == false && peek != EOF);
 
 			peek = fin.get();
 
-			if (peek == '\n')
-				line += 1;
-
-			while (isspace(peek))
-			{
-				if (peek == '\n')
-					line += 1;
-				peek = fin.get();
-			}
+			spaceEater();
 		}
-		else
+		else // Caso ele só ache o '/' ele retorna ele retorna no inicio da cadeia ou seja o / inicial
 		{
 			// operadores (e caracteres não alphanuméricos isolados)
 
-			Token op{ss.str()[0]};
+			Token op{temp};
 
 			// retorna o token
 			token.t = op;
 			return &token.t;
 		}
+		spaceEater();
 	}
 	// retorna números
 	if (isdigit(peek))
@@ -163,7 +146,6 @@ Token *Lexer::Scan()
 		token.i = new_id;
 		return &token.i;
 	}
-
 	// operadores (e caracteres não alphanuméricos isolados)
 	Token op{peek};
 	peek = ' ';
@@ -171,4 +153,14 @@ Token *Lexer::Scan()
 	// retorna o token
 	token.t = op;
 	return &token.t;
+}
+void Lexer::spaceEater()
+{
+	// Ignora espaços e \n
+	while (isspace(peek))
+	{
+		if (peek == '\n')
+			line += 1;
+		peek = fin.get();
+	}
 }

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rian/Compiladores/TP1_compiladores/lexer.cpp
+lexer.h
+/home/rian/Compiladores/TP1_compiladores/lexer.h
+fstream
+-
+sstream
+-
+
+/home/rian/Compiladores/TP1_compiladores/lexer.h
+unordered_map
+-
+string
+-
+sstream
+-
+

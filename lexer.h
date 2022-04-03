@@ -55,4 +55,5 @@ public:
 	Lexer();
 	int Lineno();
 	Token * Scan();
+	void spaceEater();
 };
