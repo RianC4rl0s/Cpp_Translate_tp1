@@ -6,12 +6,8 @@
 
 #IncludeRegexTransform: 
 
-/home/rian/Compiladores/TP1_compiladores/lexer.cpp
-lexer.h
-/home/rian/Compiladores/TP1_compiladores/lexer.h
-fstream
--
-sstream
+/home/rian/Compiladores/TP1_compiladores/error.h
+string
 -
 
 /home/rian/Compiladores/TP1_compiladores/lexer.h
@@ -20,5 +16,29 @@ unordered_map
 string
 -
 sstream
+-
+
+/home/rian/Compiladores/TP1_compiladores/parser.cpp
+parser.h
+/home/rian/Compiladores/TP1_compiladores/parser.h
+error.h
+/home/rian/Compiladores/TP1_compiladores/error.h
+iostream
+-
+sstream
+-
+cctype
+-
+
+/home/rian/Compiladores/TP1_compiladores/parser.h
+lexer.h
+/home/rian/Compiladores/TP1_compiladores/lexer.h
+symtable.h
+/home/rian/Compiladores/TP1_compiladores/symtable.h
+
+/home/rian/Compiladores/TP1_compiladores/symtable.h
+unordered_map
+-
+string
 -
 

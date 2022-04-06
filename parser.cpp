@@ -27,7 +27,7 @@ void Parser::Block()
     // block -> { decls stmts }
     if (!Match('{'))
         throw SyntaxError(scanner.Lineno(), "\'{\' esperado");
-   
+
     // nova tabela de símbolos para o bloco
     // ------------------------------------
     SymTable *saved = symtable;
@@ -38,7 +38,7 @@ void Parser::Block()
     Stmts();
 
     if (!Match('}'))
-      throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
+        throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
 
     // tabela do escopo envolvente volta a ser a tabela ativa
     // ------------------------------------------------------
@@ -115,9 +115,15 @@ void Parser::Stmts()
                 ss << "encontrado \'" << lookahead->toString() << "\' no lugar de ';'";
                 throw SyntaxError{scanner.Lineno(), ss.str()};
             }
-            cout << '\n';    
-        break;
-        //stmts -> empty
+            cout << '\n';
+            break;
+        case '(':
+            Expr();
+            if (!Match(';'))
+                throw SyntaxError{scanner.Lineno(), "\';\' esperado no lugar de" + lookahead->toString()};
+            break;
+            cout << '\n';
+        // stmts -> empty
         default:
             return;
         }
@@ -182,14 +188,14 @@ void Parser::Factor()
     {
         Match('(');
         Expr();
-        if(!Match(')'))
-            throw SyntaxError{ scanner.Lineno(), "\')\' esperado" };
+        if (!Match(')'))
+            throw SyntaxError{scanner.Lineno(), "\')\' esperado"};
     }
     else if (lookahead->tag == Tag::ID)
-    {      
-        //cout << '[' << lookahead->toString() << ']';
-        //Match(Tag::ID);
-        // verifica tipo da variável na tabela de símbolos
+    {
+        // cout << '[' << lookahead->toString() << ']';
+        // Match(Tag::ID);
+        //  verifica tipo da variável na tabela de símbolos
         Symbol *s = symtable->Find(lookahead->toString());
         if (!s)
         {
@@ -197,7 +203,7 @@ void Parser::Factor()
             ss << "variável \"" << lookahead->toString() << "\" não declarada";
             throw SyntaxError{scanner.Lineno(), ss.str()};
         }
-        cout<<"( " << s->var << ':' << s->type << " )";
+        cout << "( " << s->var << ':' << s->type << " )";
         Match(Tag::ID);
     }
     else if (lookahead->tag == Tag::NUM)
@@ -209,8 +215,8 @@ void Parser::Factor()
     else
     {
         stringstream ss;
-        ss << "símbolo \'" << lookahead->toString() << "\' inválido";  
-        throw SyntaxError{ scanner.Lineno(), ss.str() };
+        ss << "símbolo \'" << lookahead->toString() << "\' inválido";
+        throw SyntaxError{scanner.Lineno(), ss.str()};
     }
 }
 
