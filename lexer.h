@@ -7,6 +7,7 @@ using std::string;
 
 // cada token possui uma tag (número a partir de 256)
 // a tag de caracteres individuais é seu código ASCII
+// a tag math é definida para o inicio da cadeia
 enum Tag { TYPE = 256, NUM, ID, MATH };
 
 // classes para representar tokens

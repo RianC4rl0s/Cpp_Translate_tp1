@@ -12,7 +12,7 @@ Lexer::Lexer()
 	id_table["int"] = Id{Tag::TYPE, "int"};
 	id_table["char"] = Id{Tag::TYPE, "char"};
 	id_table["bool"] = Id{Tag::TYPE, "bool"};
-	id_table["math"] = Id{Tag::MATH, "math"};
+	id_table["math"] = Id{Tag::MATH, "math"};//declarei a palavra que dever ser o inicio da cadeia
 
 	// inicia leitura da entrada
 	peek = fin.get();
@@ -38,50 +38,50 @@ Token *Lexer::Scan()
 	//  }
 	spaceEater();
 	// ignora comentarios
-	while (peek == '/')
+	while (peek == '/')//encontra inicio de comentario
 	{
-		char temp = peek;
+		char temp = peek; //salva a '/'
 		peek = fin.get();
 
-		if (peek == '/')
+		if (peek == '/') // se encontrar outra '/' 
 		{
 
 			peek = fin.get();
-			while (peek != '\n')
+			while (peek != '\n') //consuma tudo até o fim da linha
 			{
 				peek = fin.get();
 			}
 			spaceEater();
 		}
-		else if (peek == '*')
+		else if (peek == '*') // caso /* text */
 		{
-			bool isComment = false;
+			bool isComment = true; //marca inicio de comentario
 			do
 			{
 				peek = fin.get();
-				if (peek == '*')
+				if (peek == '*')// se peek = *
 				{
 					peek = fin.get();
-					if (peek == '/')
+					if (peek == '/') //se peek = /, comentario termina
 					{
-						isComment = true;
+						isComment = false;
 					}
 
-					while (peek == '*' && isComment == false)
+					while (peek == '*' && isComment == true)//enquanto tiver * procure /
 					{
 						peek = fin.get();
-						if (peek == '/')
+						if (peek == '/')//se peek = /, comentario termina
 						{
-							isComment = true;
+							isComment = false;
 						}
 					}
 				}
-				// considera o salto de linha do comentario
+				// incrementa a linha
 				if (peek == '\n')
 				{
 					line++;
 				}
-			} while (isComment == false && peek != EOF);
+			} while (isComment == true && peek != EOF); // enquanto comentario é verdadeiro e não é fim de linha faça o loop
 
 			peek = fin.get();
 
@@ -157,7 +157,7 @@ Token *Lexer::Scan()
 void Lexer::spaceEater()
 {
 	// Ignora espaços e \n
-	while (isspace(peek))
+	while (isspace(peek)) //enquanto fot espaco, coma ele
 	{
 		if (peek == '\n')
 			line += 1;

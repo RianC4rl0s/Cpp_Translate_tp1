@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rian/Compiladores/TP1_compiladores/error.h
+string
+-
+
+/home/rian/Compiladores/TP1_compiladores/lexer.h
+unordered_map
+-
+string
+-
+sstream
+-
+
+/home/rian/Compiladores/TP1_compiladores/parser.h
+lexer.h
+/home/rian/Compiladores/TP1_compiladores/lexer.h
+symtable.h
+/home/rian/Compiladores/TP1_compiladores/symtable.h
+
+/home/rian/Compiladores/TP1_compiladores/symtable.h
+unordered_map
+-
+string
+-
+
+/home/rian/Compiladores/TP1_compiladores/tradutor.cpp
+iostream
+-
+fstream
+-
+cstring
+-
+parser.h
+/home/rian/Compiladores/TP1_compiladores/parser.h
+error.h
+/home/rian/Compiladores/TP1_compiladores/error.h
+

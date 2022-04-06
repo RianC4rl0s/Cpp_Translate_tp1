@@ -11,14 +11,14 @@ using std::stringstream;
 void Parser::Program()
 {
 
-    // program -> block
+    // program -> 'math'
     if (Match(Tag::MATH))
     {
     }
     else
     {
         throw SyntaxError(scanner.Lineno(), "Deve Se começar com 'math' \n");
-    }
+    } // program -> block
     Block();
 }
 
@@ -97,7 +97,7 @@ void Parser::Stmts()
             Block();
             break;
         // stmt -> Expr;
-        case Tag::ID:
+        case Tag::ID: // stmt -> id
             Expr();
             if (!Match(';'))
             {
@@ -107,7 +107,7 @@ void Parser::Stmts()
             }
             cout << '\n';
             break;
-        case Tag::NUM:
+        case Tag::NUM: // stmt -> num
             Expr();
             if (!Match(';'))
             {
@@ -117,7 +117,7 @@ void Parser::Stmts()
             }
             cout << '\n';
             break;
-        case '(':
+        case '(': // para o caso de começar uma expressao começar com '('
             Expr();
             if (!Match(';'))
                 throw SyntaxError{scanner.Lineno(), "\';\' esperado no lugar de" + lookahead->toString()};
@@ -131,18 +131,29 @@ void Parser::Stmts()
 }
 void Parser::Expr()
 {
+    /*
+    expr → expr + term
+        | expr – term
+        | term
+    fica:
+    expr ->	term add
+    add  ->	+ term { print('+') } add
+         |	- term { print('-') } add
+        |	 vazio 
+    */
+
     // expr -> term add
     Term();
     while (true)
     {
-        // add -> + term { print(+) } add
+        // add -> + term  add { print(+) }
         if (lookahead->tag == '+')
         {
             Match('+');
             Term();
             cout << '+';
         }
-        // add -> - term { print(-) } add
+        // add -> - term  add { print(-) }
         else if (lookahead->tag == '-')
         {
             Match('-');
@@ -157,18 +168,28 @@ void Parser::Expr()
 
 void Parser::Term()
 {
+    /*
+    term → term * factor
+        | term / factor
+        | factor
+    fica :
+    term ->	fact mult
+    mult ->	* fact { print('*') } mult
+         |	/ fact { print('/') } mult
+        |	 vazio
+    */
     // term -> Factor mult
     Factor();
     while (true)
     {
-        // mult -> * Factor { print(*) } mult
+        // mult -> * Factor  mult { print(*) }
         if (lookahead->tag == '*')
         {
             Match('*');
             Factor();
             cout << '*';
         }
-        // mult -> / Factor { print(/) } mult
+        // mult -> / Factor  mult { print(/) }
         else if (lookahead->tag == '/')
         {
             Match('/');
@@ -182,7 +203,12 @@ void Parser::Term()
 }
 
 void Parser::Factor()
-{
+{   
+    /*
+        factor → (expr)
+        | num
+        | id
+    */
     // Factor -> (expr)
     if (lookahead->tag == '(')
     {
@@ -191,7 +217,7 @@ void Parser::Factor()
         if (!Match(')'))
             throw SyntaxError{scanner.Lineno(), "\')\' esperado"};
     }
-    //factor->id
+    // factor->id
     else if (lookahead->tag == Tag::ID)
     {
 
@@ -205,7 +231,7 @@ void Parser::Factor()
         cout << "( " << s->var << ':' << s->type << " )";
         Match(Tag::ID);
     }
-    //factor->nuM
+    // factor->nuM
     else if (lookahead->tag == Tag::NUM)
     {
         cout << "( " << lookahead->toString() << " )";

@@ -1,0 +1,1 @@
+/usr/bin/c++  -g  -rdynamic CMakeFiles/tradutor.dir/lexer.cpp.o CMakeFiles/tradutor.dir/parser.cpp.o CMakeFiles/tradutor.dir/symtable.cpp.o CMakeFiles/tradutor.dir/error.cpp.o CMakeFiles/tradutor.dir/tradutor.cpp.o  -o tradutor 

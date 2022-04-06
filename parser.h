@@ -16,7 +16,6 @@ private:
 	void Stmt();
 	void Expr();
 	void Term();
-	//void Fact();
 	void Factor();
 	bool Match(int tag);
 

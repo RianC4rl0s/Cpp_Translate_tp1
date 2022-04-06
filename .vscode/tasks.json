@@ -13,9 +13,9 @@
             ],
             "group": "build",
             "options": {
-                "cwd": "${workspaceFolder}/Debug",    
+                "cwd": "${workspaceFolder}/Debug"
             },
-            "problemMatcher": [ ],
+            "problemMatcher": []
         },
         {
             "label": "make debug",
@@ -27,9 +27,11 @@
                 "isDefault": true
             },
             "options": {
-                "cwd": "${workspaceFolder}/Debug",    
+                "cwd": "${workspaceFolder}/Debug"
             },
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "cmake release",
@@ -41,9 +43,9 @@
             ],
             "group": "build",
             "options": {
-                "cwd": "${workspaceFolder}/Release",    
+                "cwd": "${workspaceFolder}/Release"
             },
-            "problemMatcher": [ ],
+            "problemMatcher": []
         },
         {
             "label": "make release",
@@ -52,9 +54,11 @@
             "args": [],
             "group": "build",
             "options": {
-                "cwd": "${workspaceFolder}/Release",    
+                "cwd": "${workspaceFolder}/Release"
             },
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ],
     "presentation": {

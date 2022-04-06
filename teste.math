@@ -1,6 +1,6 @@
 // arquivo fonte
-//2
-//4
+//Tp1
+//COMPILADORES
 
 math
 {
@@ -12,9 +12,10 @@ math
  (2*4)-4;
  (2*4)-(6/2);
  {
- int x;/*teste*/
-2+ 3+4;
- bool y;
+ int x;/*teste
+ bool y;*/
+ 2*4 + 3 -(4/2); 
+ //teste
  y;
  }
  x;
