@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 		//cout << argv[1] << "\n";
 		if (!strcmp(argv[1], "--help"))
 		{
-			cout << "Use tradutor <file_pat/filename>  Para Realizara a tradução\n";
+			cout << "Use tradutor <file_pat/'filename'.math>  Para Realizara a tradução\n";
 			cout << "tradutor --v 				   Para ver a versao do produto\n";
 		}
 		else if (!strcmp(argv[1], "--v"))
@@ -25,7 +25,8 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-
+			stringstream ss;
+			ss << argv[1];
 			fin.open(argv[1]);
 			if (!fin.is_open())
 			{

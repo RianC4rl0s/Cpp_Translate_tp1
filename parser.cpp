@@ -121,8 +121,8 @@ void Parser::Stmts()
             Expr();
             if (!Match(';'))
                 throw SyntaxError{scanner.Lineno(), "\';\' esperado no lugar de" + lookahead->toString()};
-            break;
             cout << '\n';
+            break;
         // stmts -> empty
         default:
             return;
@@ -191,11 +191,10 @@ void Parser::Factor()
         if (!Match(')'))
             throw SyntaxError{scanner.Lineno(), "\')\' esperado"};
     }
+    //factor->id
     else if (lookahead->tag == Tag::ID)
     {
-        // cout << '[' << lookahead->toString() << ']';
-        // Match(Tag::ID);
-        //  verifica tipo da variável na tabela de símbolos
+
         Symbol *s = symtable->Find(lookahead->toString());
         if (!s)
         {
@@ -206,6 +205,7 @@ void Parser::Factor()
         cout << "( " << s->var << ':' << s->type << " )";
         Match(Tag::ID);
     }
+    //factor->nuM
     else if (lookahead->tag == Tag::NUM)
     {
         cout << "( " << lookahead->toString() << " )";
