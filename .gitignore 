@@ -1,5 +1,5 @@
-Debug/
-Release/
+/Debug
+/Release
 .vscode
 !Debug/README.md 
 !Release/README.md

@@ -38,7 +38,7 @@ void Parser::Block()
     Stmts();
 
     if (!Match('}'))
-        throw SyntaxError(scanner.Lineno(), "\'}\' esperado");
+        throw SyntaxError(scanner.Lineno(),"encontrado "+ lookahead->toString() + "\'}\' esperado");
 
     // tabela do escopo envolvente volta a ser a tabela ativa
     // ------------------------------------------------------
@@ -215,7 +215,7 @@ void Parser::Factor()
         Match('(');
         Expr();
         if (!Match(')'))
-            throw SyntaxError{scanner.Lineno(), "\')\' esperado"};
+            throw SyntaxError{scanner.Lineno(),"encontrado "+ lookahead->toString() +"\')\' esperado"};
     }
     // factor->id
     else if (lookahead->tag == Tag::ID)
@@ -225,7 +225,7 @@ void Parser::Factor()
         if (!s)
         {
             stringstream ss;
-            ss << "variável \"" << lookahead->toString() << "\" não declarada";
+            ss << "variável \"" << lookahead->toString() <<"\" encontrado \""+ lookahead->toString() + "\" não declarada";
             throw SyntaxError{scanner.Lineno(), ss.str()};
         }
         cout << "( " << s->var << ':' << s->type << " )";

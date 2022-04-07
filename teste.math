@@ -5,8 +5,9 @@
 math
 {
  int x;
- int val;
+ int /* teste */ val;
  int y;
+ //bool x;
  x + val;
  2+(3/5);
  (2*4)-4;
